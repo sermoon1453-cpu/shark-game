@@ -26,7 +26,7 @@ function startTraining() {
     document.getElementById("continueBtn").innerText = "Devam Et";
 }
 
-// DEVAM ET BUTONU
+// DEVAM ET
 function continueGame() {
     document.getElementById("continueBtn").style.display = "none";
     document.getElementById("result").innerText = "";
@@ -38,7 +38,7 @@ function continueGame() {
     }
 }
 
-// 🧪 ANTRENMAN
+// ANTRENMAN
 function runTraining() {
     if (trainingRound >= maxTraining) {
         isTraining = false;
@@ -50,11 +50,8 @@ function runTraining() {
     trainingRound++;
 
     const sharks = getSharks();
-
-    // random yanlar
     setRandomSides(sharks);
 
-    // ortadaki doğru
     if (Math.random() < 0.5) {
         direction = "left";
         sharks[1].src = sharkLeft;
@@ -67,7 +64,7 @@ function runTraining() {
 
     setTimeout(() => {
         hideSharks();
-        // 🔥 SADECE DOĞRUYU GÖSTER
+
         document.getElementById("result").innerText =
             direction === "left" ? "Doğru: SOL" : "Doğru: SAĞ";
 
@@ -75,7 +72,7 @@ function runTraining() {
     }, 1200);
 }
 
-// 🎮 ANA OYUN
+// ANA OYUN
 function newRound() {
     if (round >= maxRounds) {
         alert(`Oyun bitti!\nDoğru: ${correct}\nYanlış: ${wrong}`);
@@ -86,7 +83,6 @@ function newRound() {
     document.getElementById("round").innerText = `Tur: ${round} / 35`;
 
     const sharks = getSharks();
-
     setRandomSides(sharks);
 
     if (Math.random() < 0.5) {
