@@ -3,38 +3,35 @@ body {
     font-family: Arial;
     text-align: center;
     color: white;
-    background: linear-gradient(to bottom, #023e8a, #0096c7);
-    overflow: hidden;
+
+    background-image: url("ocean.jpg"); /* SENİN GÖRSEL */
+    background-size: cover;
+    background-position: center;
 }
 
-/* deniz dalga efekti */
-body::before {
-    content: "";
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 10%);
-    background-size: 50px 50px;
-    animation: wave 10s linear infinite;
+.game-area {
+    margin-top: 100px;
 }
 
-@keyframes wave {
-    from { transform: translate(0,0); }
-    to { transform: translate(-100px,-100px); }
+.title {
+    font-size: 28px;
 }
 
-h1 {
-    margin-top: 20px;
+#round {
+    margin-top: 10px;
+    font-size: 18px;
 }
 
-.game-box {
-    margin-top: 40px;
-    position: relative;
+.sharks {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 40px 0;
 }
 
-#shark {
-    width: 150px;
-    margin: 30px;
+.shark {
+    width: 140px;
+    filter: brightness(0); /* siyah silüet */
     transition: transform 0.2s, opacity 0.3s;
 }
 
@@ -49,7 +46,6 @@ button {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    background: #caf0f8;
 }
 
 button:hover {
@@ -58,11 +54,5 @@ button:hover {
 
 #result {
     font-size: 22px;
-    margin-top: 10px;
-}
-
-canvas {
-    margin-top: 30px;
-    background: white;
-    border-radius: 10px;
+    margin-top: 15px;
 }
