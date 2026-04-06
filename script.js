@@ -24,7 +24,7 @@ function startTraining() {
     nextTrainingRound();
 }
 
-// ANTRENMAN TURU
+// ANTRENMAN
 function nextTrainingRound() {
     const sharks = getSharks();
     setRandomSides(sharks);
@@ -44,7 +44,6 @@ function nextTrainingRound() {
     }, 1200);
 }
 
-// ANTRENMAN TIKLAMA
 function handleTrainingClick(user) {
     trainingClicks++;
 
@@ -68,7 +67,7 @@ function startGame() {
 
     document.getElementById("continueArea").style.display = "none";
     document.getElementById("result").innerText = "";
-    document.querySelector(".buttons").style.display = "block";
+    document.querySelector(".buttons").style.display = "flex";
 
     newRound();
 }
@@ -98,7 +97,7 @@ function newRound() {
 
     setTimeout(() => {
         hideSharks();
-        startTime = Date.now(); // ⏱️ süre hala ölçülüyor
+        startTime = Date.now();
     }, 1200);
 }
 
@@ -109,7 +108,7 @@ function guess(user) {
         return;
     }
 
-    let reaction = Date.now() - startTime; // ölçüm devam ediyor (gizli)
+    let reaction = Date.now() - startTime;
 
     if (user === direction) {
         correct++;
@@ -122,7 +121,7 @@ function guess(user) {
     setTimeout(newRound, 800);
 }
 
-// SONUÇ EKRANI
+// SONUÇ
 function showEndScreen() {
     document.getElementById("gameScreen").style.display = "none";
     document.getElementById("endScreen").style.display = "block";
