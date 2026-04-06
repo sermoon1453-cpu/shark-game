@@ -10,7 +10,6 @@ let gameActive = true;
 let round = 0;
 const maxRounds = 35;
 
-// yeni tur
 function newRound() {
     if (!gameActive) return;
 
@@ -20,28 +19,27 @@ function newRound() {
     }
 
     round++;
+    document.getElementById("round").innerText = `Tur: ${round} / 35`;
 
     const random = Math.random();
+    const shark = document.getElementById("shark");
 
     if (random < 0.5) {
         direction = "left";
-        document.getElementById("shark").style.transform = "scaleX(-1)";
+        shark.style.transform = "scaleX(-1)";
     } else {
         direction = "right";
-        document.getElementById("shark").style.transform = "scaleX(1)";
+        shark.style.transform = "scaleX(1)";
     }
 
-    // köpekbalığı göster
-    document.getElementById("shark").classList.remove("hidden");
+    shark.classList.remove("hidden");
 
-    // 0.7 sn sonra gizle
     setTimeout(() => {
-        document.getElementById("shark").classList.add("hidden");
+        shark.classList.add("hidden");
         startTime = Date.now();
     }, 700);
 }
 
-// tahmin
 function guess(user) {
     if (!gameActive) return;
 
@@ -50,36 +48,29 @@ function guess(user) {
 
     if (user === direction) {
         correct++;
-        showFeedback("✅ Doğru");
+        showResult("✅ Doğru");
     } else {
         wrong++;
-        showFeedback("❌ Yanlış");
+        showResult("❌ Yanlış");
     }
 
     setTimeout(newRound, 800);
 }
 
-// geri bildirim
-function showFeedback(text) {
-    const result = document.getElementById("result");
-    result.innerText = text;
+function showResult(text) {
+    document.getElementById("result").innerText = text;
 }
 
-// ortalama süre
 function getAverageTime() {
-    if (reactionTimes.length === 0) return 0;
-
     let sum = reactionTimes.reduce((a, b) => a + b, 0);
     return Math.round(sum / reactionTimes.length);
 }
 
-// bitir
 function finishGame() {
     gameActive = false;
     showChart();
 }
 
-// grafik
 function showChart() {
     const ctx = document.getElementById('resultChart');
 
@@ -93,11 +84,7 @@ function showChart() {
                     wrong,
                     getAverageTime()
                 ],
-                backgroundColor: [
-                    '#06d6a0',
-                    '#ef476f',
-                    '#118ab2'
-                ]
+                backgroundColor: ['#06d6a0','#ef476f','#118ab2']
             }]
         },
         options: {
@@ -108,5 +95,4 @@ function showChart() {
     });
 }
 
-// başlat
 newRound();
