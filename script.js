@@ -5,42 +5,56 @@ let wrong = 0;
 let round = 0;
 const maxRounds = 35;
 
-let startTime;
-let gameActive = true;
+let trainingRound = 0;
+const maxTraining = 3;
 
-// 🦈 GÖRSELLER
+let isTraining = true;
+let gameActive = false;
+
+let startTime;
+
+// görseller
 const sharkLeft = "shark-left.png";
 const sharkRight = "shark-right.png";
 
-function newRound() {
-    if (!gameActive) return;
+// BAŞLAT
+function startTraining() {
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("gameScreen").style.display = "block";
 
-    if (round >= maxRounds) {
-        alert("Oyun bitti!\nDoğru: " + correct + "\nYanlış: " + wrong);
+    document.getElementById("continueBtn").style.display = "block";
+    document.getElementById("continueBtn").innerText = "Devam Et";
+}
+
+// DEVAM ET BUTONU
+function continueGame() {
+    document.getElementById("continueBtn").style.display = "none";
+    document.getElementById("result").innerText = "";
+
+    if (isTraining) {
+        runTraining();
+    } else {
+        newRound();
+    }
+}
+
+// 🧪 ANTRENMAN
+function runTraining() {
+    if (trainingRound >= maxTraining) {
+        isTraining = false;
+        document.getElementById("result").innerText = "Antrenman bitti!";
+        document.getElementById("continueBtn").style.display = "block";
         return;
     }
 
-    round++;
-    document.getElementById("round").innerText = `Tur: ${round} / 35`;
+    trainingRound++;
 
-    const sharks = [
-        document.getElementById("shark1"),
-        document.getElementById("shark2"), // ORTA
-        document.getElementById("shark3")
-    ];
+    const sharks = getSharks();
 
-    // 🔀 YANLAR RANDOM
-    sharks.forEach((shark, index) => {
-        if (index !== 1) {
-            if (Math.random() < 0.5) {
-                shark.src = sharkLeft;
-            } else {
-                shark.src = sharkRight;
-            }
-        }
-    });
+    // random yanlar
+    setRandomSides(sharks);
 
-    // 🎯 ORTADAKİ DOĞRU
+    // ortadaki doğru
     if (Math.random() < 0.5) {
         direction = "left";
         sharks[1].src = sharkLeft;
@@ -49,18 +63,51 @@ function newRound() {
         sharks[1].src = sharkRight;
     }
 
-    // göster
-    sharks.forEach(s => s.classList.remove("hidden"));
+    showSharks();
 
-    // ⏱️ süre (1400 ms)
     setTimeout(() => {
-        sharks.forEach(s => s.classList.add("hidden"));
-        startTime = Date.now();
-    }, 1400);
+        hideSharks();
+        // 🔥 SADECE DOĞRUYU GÖSTER
+        document.getElementById("result").innerText =
+            direction === "left" ? "Doğru: SOL" : "Doğru: SAĞ";
+
+        document.getElementById("continueBtn").style.display = "block";
+    }, 1200);
 }
 
+// 🎮 ANA OYUN
+function newRound() {
+    if (round >= maxRounds) {
+        alert(`Oyun bitti!\nDoğru: ${correct}\nYanlış: ${wrong}`);
+        return;
+    }
+
+    round++;
+    document.getElementById("round").innerText = `Tur: ${round} / 35`;
+
+    const sharks = getSharks();
+
+    setRandomSides(sharks);
+
+    if (Math.random() < 0.5) {
+        direction = "left";
+        sharks[1].src = sharkLeft;
+    } else {
+        direction = "right";
+        sharks[1].src = sharkRight;
+    }
+
+    showSharks();
+
+    setTimeout(() => {
+        hideSharks();
+        startTime = Date.now();
+    }, 1200);
+}
+
+// TAHMİN
 function guess(user) {
-    if (!gameActive) return;
+    if (isTraining) return;
 
     let reaction = Date.now() - startTime;
 
@@ -72,11 +119,36 @@ function guess(user) {
         showResult(`❌ Yanlış (${reaction} ms)`);
     }
 
-    setTimeout(newRound, 800);
+    setTimeout(() => {
+        document.getElementById("continueBtn").style.display = "block";
+    }, 500);
+}
+
+// yardımcılar
+function getSharks() {
+    return [
+        document.getElementById("shark1"),
+        document.getElementById("shark2"),
+        document.getElementById("shark3")
+    ];
+}
+
+function setRandomSides(sharks) {
+    sharks.forEach((s, i) => {
+        if (i !== 1) {
+            s.src = Math.random() < 0.5 ? sharkLeft : sharkRight;
+        }
+    });
+}
+
+function showSharks() {
+    getSharks().forEach(s => s.classList.remove("hidden"));
+}
+
+function hideSharks() {
+    getSharks().forEach(s => s.classList.add("hidden"));
 }
 
 function showResult(text) {
     document.getElementById("result").innerText = text;
 }
-
-newRound();
