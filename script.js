@@ -1,5 +1,4 @@
 let direction;
-
 let correct = 0;
 let wrong = 0;
 
@@ -13,7 +12,7 @@ function newRound() {
     if (!gameActive) return;
 
     if (round >= maxRounds) {
-        finishGame();
+        alert("Oyun bitti!\nDoğru: " + correct + "\nYanlış: " + wrong);
         return;
     }
 
@@ -26,13 +25,11 @@ function newRound() {
         document.getElementById("shark3")
     ];
 
-    // hepsine random yön ver
     sharks.forEach(shark => {
         let dir = Math.random() < 0.5 ? -1 : 1;
         shark.style.transform = `scaleX(${dir})`;
     });
 
-    // ortadaki (asıl cevap)
     if (Math.random() < 0.5) {
         direction = "left";
         sharks[1].style.transform = "scaleX(-1)";
@@ -41,7 +38,6 @@ function newRound() {
         sharks[1].style.transform = "scaleX(1)";
     }
 
-    // göster
     sharks.forEach(s => s.classList.remove("hidden"));
 
     setTimeout(() => {
@@ -70,15 +66,4 @@ function showResult(text) {
     document.getElementById("result").innerText = text;
 }
 
-function finishGame() {
-    gameActive = false;
-
-    alert(
-        "Oyun bitti!\n\n" +
-        "Doğru: " + correct +
-        "\nYanlış: " + wrong
-    );
-}
-
 newRound();
-
