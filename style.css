@@ -23,7 +23,7 @@ body {
 .shark {
     width: 140px;
     filter: brightness(0);
-    transition: transform 0.2s, opacity 0.3s;
+    transition: opacity 0.3s;
 }
 
 .hidden {
@@ -37,6 +37,10 @@ button {
     border-radius: 10px;
     border: none;
     cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.1);
 }
 
 #result {
