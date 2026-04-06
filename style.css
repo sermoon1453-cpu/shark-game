@@ -48,10 +48,8 @@ button:hover {
     transform: scale(1.1);
 }
 
-#result {
-    font-size: 22px;
-}
-
-#continueBtn {
+#continueArea {
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
 }
