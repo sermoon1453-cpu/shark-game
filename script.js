@@ -54,10 +54,7 @@ function handleTrainingClick(user) {
     if (trainingClicks >= maxTrainingClicks) {
         document.getElementById("result").innerText = "Antrenman bitti!";
 
-        // 🔥 BUTONLARI GİZLE
         document.querySelector(".buttons").style.display = "none";
-
-        // DEVAM ET GÖSTER
         document.getElementById("continueArea").style.display = "block";
         return;
     }
@@ -71,8 +68,6 @@ function startGame() {
 
     document.getElementById("continueArea").style.display = "none";
     document.getElementById("result").innerText = "";
-
-    // 🔥 BUTONLARI GERİ GETİR
     document.querySelector(".buttons").style.display = "block";
 
     newRound();
@@ -81,7 +76,7 @@ function startGame() {
 // ANA OYUN
 function newRound() {
     if (round >= maxRounds) {
-        alert(`Oyun bitti!\nDoğru: ${correct}\nYanlış: ${wrong}`);
+        showEndScreen();
         return;
     }
 
@@ -125,6 +120,15 @@ function guess(user) {
     }
 
     setTimeout(newRound, 800);
+}
+
+// SONUÇ EKRANI
+function showEndScreen() {
+    document.getElementById("gameScreen").style.display = "none";
+    document.getElementById("endScreen").style.display = "block";
+
+    document.getElementById("finalScore").innerText =
+        `Doğru: ${correct} | Yanlış: ${wrong}`;
 }
 
 // yardımcılar
