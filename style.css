@@ -1,72 +1,49 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-}
-
-.container {
+    font-family: Arial;
     text-align: center;
-    margin-top: 40px;
-}
-
-h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-.game-box {
-    background: white;
-    width: 350px;
-    margin: auto;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-#shark {
-    font-size: 90px;
-    margin: 30px 0;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-button {
-    flex: 1;
-    margin: 5px;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background-color: #e0e0e0;
-}
-
-button:hover {
-    background-color: #d5d5d5;
-}
-
-.skip {
-    margin-top: 10px;
-    width: 100%;
-    background-color: #ffd166;
-}
-
-.finish {
-    margin-top: 10px;
-    width: 100%;
-    background-color: #ef476f;
+    background: linear-gradient(to bottom, #0077b6, #00b4d8);
     color: white;
 }
 
-#result {
-    margin-top: 15px;
+h1 {
+    margin-top: 20px;
+}
+
+.game-box {
+    margin-top: 50px;
+}
+
+#shark {
+    width: 120px;
+    margin: 30px;
+    transition: transform 0.2s;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+button {
+    margin: 10px;
+    padding: 12px 20px;
     font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 22px;
 }
 
 canvas {
-    margin-top: 30px;
-    max-width: 400px;
+    margin-top: 40px;
+    background: white;
+    border-radius: 10px;
 }
