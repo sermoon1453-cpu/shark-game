@@ -48,8 +48,25 @@ button:hover {
     transform: scale(1.1);
 }
 
+#result {
+    font-size: 22px;
+}
+
 #continueArea {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
+
+#endScreen {
+    margin-top: 50px;
+}
+
+#endScreen h2 {
+    font-size: 32px;
+}
+
+#endScreen p {
+    font-size: 22px;
+    margin: 20px;
 }
