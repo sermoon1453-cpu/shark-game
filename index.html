@@ -10,16 +10,20 @@
 </head>
 <body>
 
-<h1>Köpekbalığı Oyunu</h1>
+<h1>🦈 Köpekbalığı Oyunu</h1>
 
-<div id="shark">⬅️</div>
+<div id="game-container">
 
-<button onclick="guess('left')">Sol</button>
-<button onclick="guess('right')">Sağ</button>
-<button onclick="skip()">Atla</button>
-<button onclick="finishGame()">Bitir</button>
+    <div id="shark">⬅️</div>
 
-<p id="result"></p>
+    <button onclick="guess('left')">⬅️ Sol</button>
+    <button onclick="guess('right')">Sağ ➡️</button>
+    <button onclick="skip()">Atla</button>
+    <button onclick="finishGame()">Bitir</button>
+
+    <p id="result"></p>
+
+</div>
 
 <canvas id="resultChart" width="400" height="200"></canvas>
 
@@ -27,4 +31,3 @@
 
 </body>
 </html>
-
