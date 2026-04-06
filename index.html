@@ -5,25 +5,28 @@
     <title>Köpekbalığı Oyunu</title>
 
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<h1>🦈 Köpekbalığını Takip Et</h1>
-<p id="round">Tur: 0 / 35</p>
+<div class="game-area">
 
-<div class="game-box">
-    <img id="shark" src="https://upload.wikimedia.org/wikipedia/commons/5/56/White_shark.svg">
-    
+    <p class="title">Ortadaki köpekbalığına dikkat et</p>
+    <p id="round">Tur: 0 / 35</p>
+
+    <div class="sharks">
+        <img class="shark" id="shark1" src="shark.png">
+        <img class="shark" id="shark2" src="shark.png">
+        <img class="shark" id="shark3" src="shark.png">
+    </div>
+
     <div class="buttons">
         <button onclick="guess('left')">SOL</button>
         <button onclick="guess('right')">SAĞ</button>
     </div>
 
     <p id="result"></p>
-</div>
 
-<canvas id="resultChart"></canvas>
+</div>
 
 <script src="script.js"></script>
 
