@@ -25,11 +25,13 @@ function newRound() {
         document.getElementById("shark3")
     ];
 
+    // hepsine random yön
     sharks.forEach(shark => {
         let dir = Math.random() < 0.5 ? -1 : 1;
         shark.style.transform = `scaleX(${dir})`;
     });
 
+    // ortadaki (asıl cevap)
     if (Math.random() < 0.5) {
         direction = "left";
         sharks[1].style.transform = "scaleX(-1)";
@@ -38,20 +40,26 @@ function newRound() {
         sharks[1].style.transform = "scaleX(1)";
     }
 
+    // göster
     sharks.forEach(s => s.classList.remove("hidden"));
 
+    // ⏱️ SÜRE 2 KAT (1400ms)
     setTimeout(() => {
         sharks.forEach(s => s.classList.add("hidden"));
         startTime = Date.now();
-    }, 700);
+    }, 1400);
 }
 
+// 🔥 YÖN TERS MANTIĞI
 function guess(user) {
     if (!gameActive) return;
 
     let reaction = Date.now() - startTime;
 
-    if (user === direction) {
+    if (
+        (direction === "right" && user === "left") ||
+        (direction === "left" && user === "right")
+    ) {
         correct++;
         showResult(`✅ Doğru (${reaction} ms)`);
     } else {
