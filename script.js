@@ -10,7 +10,6 @@ let trainingClicks = 0;
 const maxTrainingClicks = 3;
 
 let isTraining = true;
-let gameActive = false;
 
 let startTime;
 
@@ -54,6 +53,11 @@ function handleTrainingClick(user) {
 
     if (trainingClicks >= maxTrainingClicks) {
         document.getElementById("result").innerText = "Antrenman bitti!";
+
+        // 🔥 BUTONLARI GİZLE
+        document.querySelector(".buttons").style.display = "none";
+
+        // DEVAM ET GÖSTER
         document.getElementById("continueArea").style.display = "block";
         return;
     }
@@ -64,12 +68,17 @@ function handleTrainingClick(user) {
 // ANA OYUN BAŞLAT
 function startGame() {
     isTraining = false;
+
     document.getElementById("continueArea").style.display = "none";
     document.getElementById("result").innerText = "";
+
+    // 🔥 BUTONLARI GERİ GETİR
+    document.querySelector(".buttons").style.display = "block";
+
     newRound();
 }
 
-// ANA OYUN TURU
+// ANA OYUN
 function newRound() {
     if (round >= maxRounds) {
         alert(`Oyun bitti!\nDoğru: ${correct}\nYanlış: ${wrong}`);
