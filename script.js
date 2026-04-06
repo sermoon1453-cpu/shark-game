@@ -21,17 +21,19 @@ function newRound() {
 
     const sharks = [
         document.getElementById("shark1"),
-        document.getElementById("shark2"),
+        document.getElementById("shark2"), // ORTA
         document.getElementById("shark3")
     ];
 
-    // hepsine random yön
-    sharks.forEach(shark => {
-        let dir = Math.random() < 0.5 ? -1 : 1;
-        shark.style.transform = `scaleX(${dir})`;
+    // 🔀 yanlardakiler random
+    sharks.forEach((shark, index) => {
+        if (index !== 1) {
+            let dir = Math.random() < 0.5 ? -1 : 1;
+            shark.style.transform = `scaleX(${dir})`;
+        }
     });
 
-    // ortadaki (asıl cevap)
+    // 🎯 ORTADAKİ = doğru cevap
     if (Math.random() < 0.5) {
         direction = "left";
         sharks[1].style.transform = "scaleX(-1)";
@@ -43,23 +45,20 @@ function newRound() {
     // göster
     sharks.forEach(s => s.classList.remove("hidden"));
 
-    // ⏱️ SÜRE 2 KAT (1400ms)
+    // ⏱️ 1400ms (senin isteğin)
     setTimeout(() => {
         sharks.forEach(s => s.classList.add("hidden"));
         startTime = Date.now();
     }, 1400);
 }
 
-// 🔥 YÖN TERS MANTIĞI
+// ✅ NORMAL DOĞRU KONTROL
 function guess(user) {
     if (!gameActive) return;
 
     let reaction = Date.now() - startTime;
 
-    if (
-        (direction === "right" && user === "left") ||
-        (direction === "left" && user === "right")
-    ) {
+    if (user === direction) {
         correct++;
         showResult(`✅ Doğru (${reaction} ms)`);
     } else {
