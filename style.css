@@ -10,7 +10,12 @@ body {
 }
 
 .game-area {
-    margin-top: 100px;
+    margin-top: 80px;
+}
+
+.start-img {
+    width: 120px;
+    margin: 20px;
 }
 
 .sharks {
@@ -45,4 +50,8 @@ button:hover {
 
 #result {
     font-size: 22px;
+}
+
+#continueBtn {
+    margin-top: 20px;
 }
