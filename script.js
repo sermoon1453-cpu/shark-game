@@ -8,6 +8,10 @@ const maxRounds = 35;
 let startTime;
 let gameActive = true;
 
+// 🦈 GÖRSELLER
+const sharkLeft = "shark-left.png";
+const sharkRight = "shark-right.png";
+
 function newRound() {
     if (!gameActive) return;
 
@@ -21,45 +25,46 @@ function newRound() {
 
     const sharks = [
         document.getElementById("shark1"),
-        document.getElementById("shark2"),
+        document.getElementById("shark2"), // ORTA
         document.getElementById("shark3")
     ];
 
-    // yanlar random
+    // 🔀 YANLAR RANDOM
     sharks.forEach((shark, index) => {
         if (index !== 1) {
-            let dir = Math.random() < 0.5 ? -1 : 1;
-            shark.style.transform = `scaleX(${dir})`;
+            if (Math.random() < 0.5) {
+                shark.src = sharkLeft;
+            } else {
+                shark.src = sharkRight;
+            }
         }
     });
 
-    // ortadaki doğru
+    // 🎯 ORTADAKİ DOĞRU
     if (Math.random() < 0.5) {
         direction = "left";
-        sharks[1].style.transform = "scaleX(-1)";
+        sharks[1].src = sharkLeft;
     } else {
         direction = "right";
-        sharks[1].style.transform = "scaleX(1)";
+        sharks[1].src = sharkRight;
     }
 
+    // göster
     sharks.forEach(s => s.classList.remove("hidden"));
 
+    // ⏱️ süre (1400 ms)
     setTimeout(() => {
         sharks.forEach(s => s.classList.add("hidden"));
         startTime = Date.now();
     }, 1400);
 }
 
-// 🔥 BUTONLARIN İŞLEVİ TERS
 function guess(user) {
     if (!gameActive) return;
 
     let reaction = Date.now() - startTime;
 
-    // burada tersliyoruz
-    let mappedUser = (user === "left") ? "right" : "left";
-
-    if (mappedUser === direction) {
+    if (user === direction) {
         correct++;
         showResult(`✅ Doğru (${reaction} ms)`);
     } else {
