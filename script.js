@@ -21,11 +21,11 @@ function newRound() {
 
     const sharks = [
         document.getElementById("shark1"),
-        document.getElementById("shark2"), // ORTA
+        document.getElementById("shark2"),
         document.getElementById("shark3")
     ];
 
-    // 🔀 yanlardakiler random
+    // yanlar random
     sharks.forEach((shark, index) => {
         if (index !== 1) {
             let dir = Math.random() < 0.5 ? -1 : 1;
@@ -33,7 +33,7 @@ function newRound() {
         }
     });
 
-    // 🎯 ORTADAKİ = doğru cevap
+    // ortadaki doğru
     if (Math.random() < 0.5) {
         direction = "left";
         sharks[1].style.transform = "scaleX(-1)";
@@ -42,23 +42,24 @@ function newRound() {
         sharks[1].style.transform = "scaleX(1)";
     }
 
-    // göster
     sharks.forEach(s => s.classList.remove("hidden"));
 
-    // ⏱️ 1400ms (senin isteğin)
     setTimeout(() => {
         sharks.forEach(s => s.classList.add("hidden"));
         startTime = Date.now();
     }, 1400);
 }
 
-// ✅ NORMAL DOĞRU KONTROL
+// 🔥 BUTONLARIN İŞLEVİ TERS
 function guess(user) {
     if (!gameActive) return;
 
     let reaction = Date.now() - startTime;
 
-    if (user === direction) {
+    // burada tersliyoruz
+    let mappedUser = (user === "left") ? "right" : "left";
+
+    if (mappedUser === direction) {
         correct++;
         showResult(`✅ Doğru (${reaction} ms)`);
     } else {
