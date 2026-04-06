@@ -2,32 +2,43 @@ let direction;
 
 let correct = 0;
 let wrong = 0;
-let skipped = 0;
 let reactionTimes = [];
 
 let startTime;
 let gameActive = true;
 
+let round = 0;
+const maxRounds = 35;
+
 // yeni tur
 function newRound() {
     if (!gameActive) return;
+
+    if (round >= maxRounds) {
+        finishGame();
+        return;
+    }
+
+    round++;
 
     const random = Math.random();
 
     if (random < 0.5) {
         direction = "left";
-        document.getElementById("shark").innerText = "🦈⬅️";
+        document.getElementById("shark").style.transform = "scaleX(-1)";
     } else {
         direction = "right";
-        document.getElementById("shark").innerText = "🦈➡️";
+        document.getElementById("shark").style.transform = "scaleX(1)";
     }
 
-    // kısa süre sonra gizle (oyun hissi)
-    setTimeout(() => {
-        document.getElementById("shark").innerText = "❓";
-    }, 700);
+    // köpekbalığı göster
+    document.getElementById("shark").classList.remove("hidden");
 
-    startTime = Date.now();
+    // 0.7 sn sonra gizle
+    setTimeout(() => {
+        document.getElementById("shark").classList.add("hidden");
+        startTime = Date.now();
+    }, 700);
 }
 
 // tahmin
@@ -39,22 +50,19 @@ function guess(user) {
 
     if (user === direction) {
         correct++;
-        document.getElementById("result").innerText = "✅ Doğru!";
+        showFeedback("✅ Doğru");
     } else {
         wrong++;
-        document.getElementById("result").innerText = "❌ Yanlış!";
+        showFeedback("❌ Yanlış");
     }
 
     setTimeout(newRound, 800);
 }
 
-// atla
-function skip() {
-    if (!gameActive) return;
-
-    skipped++;
-    document.getElementById("result").innerText = "⏭️ Atlandı!";
-    setTimeout(newRound, 500);
+// geri bildirim
+function showFeedback(text) {
+    const result = document.getElementById("result");
+    result.innerText = text;
 }
 
 // ortalama süre
@@ -65,41 +73,36 @@ function getAverageTime() {
     return Math.round(sum / reactionTimes.length);
 }
 
-// oyunu bitir
+// bitir
 function finishGame() {
     gameActive = false;
     showChart();
 }
 
-// grafik göster
+// grafik
 function showChart() {
     const ctx = document.getElementById('resultChart');
 
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Doğru', 'Yanlış', 'Atlanan', 'Ort. Süre (ms)'],
+            labels: ['Doğru', 'Yanlış', 'Ort. Süre (ms)'],
             datasets: [{
-                label: 'Oyuncu Performansı',
                 data: [
                     correct,
                     wrong,
-                    skipped,
                     getAverageTime()
                 ],
                 backgroundColor: [
                     '#06d6a0',
                     '#ef476f',
-                    '#ffd166',
                     '#118ab2'
                 ]
             }]
         },
         options: {
             plugins: {
-                legend: {
-                    display: false
-                }
+                legend: { display: false }
             }
         }
     });
