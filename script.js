@@ -8,6 +8,7 @@ let reactionTimes = [];
 let startTime;
 let gameActive = true;
 
+// yeni tur
 function newRound() {
     if (!gameActive) return;
 
@@ -15,15 +16,21 @@ function newRound() {
 
     if (random < 0.5) {
         direction = "left";
-        document.getElementById("shark").innerText = "⬅️";
+        document.getElementById("shark").innerText = "🦈⬅️";
     } else {
         direction = "right";
-        document.getElementById("shark").innerText = "➡️";
+        document.getElementById("shark").innerText = "🦈➡️";
     }
+
+    // kısa süre sonra gizle (oyun hissi)
+    setTimeout(() => {
+        document.getElementById("shark").innerText = "❓";
+    }, 700);
 
     startTime = Date.now();
 }
 
+// tahmin
 function guess(user) {
     if (!gameActive) return;
 
@@ -32,23 +39,25 @@ function guess(user) {
 
     if (user === direction) {
         correct++;
-        document.getElementById("result").innerText = "Doğru!";
+        document.getElementById("result").innerText = "✅ Doğru!";
     } else {
         wrong++;
-        document.getElementById("result").innerText = "Yanlış!";
+        document.getElementById("result").innerText = "❌ Yanlış!";
     }
 
     setTimeout(newRound, 800);
 }
 
+// atla
 function skip() {
     if (!gameActive) return;
 
     skipped++;
-    document.getElementById("result").innerText = "Atlandı!";
+    document.getElementById("result").innerText = "⏭️ Atlandı!";
     setTimeout(newRound, 500);
 }
 
+// ortalama süre
 function getAverageTime() {
     if (reactionTimes.length === 0) return 0;
 
@@ -56,11 +65,13 @@ function getAverageTime() {
     return Math.round(sum / reactionTimes.length);
 }
 
+// oyunu bitir
 function finishGame() {
     gameActive = false;
     showChart();
 }
 
+// grafik göster
 function showChart() {
     const ctx = document.getElementById('resultChart');
 
@@ -69,16 +80,30 @@ function showChart() {
         data: {
             labels: ['Doğru', 'Yanlış', 'Atlanan', 'Ort. Süre (ms)'],
             datasets: [{
-                label: 'Oyuncu Verisi',
+                label: 'Oyuncu Performansı',
                 data: [
                     correct,
                     wrong,
                     skipped,
                     getAverageTime()
+                ],
+                backgroundColor: [
+                    '#06d6a0',
+                    '#ef476f',
+                    '#ffd166',
+                    '#118ab2'
                 ]
             }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
         }
     });
 }
 
+// başlat
 newRound();
