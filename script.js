@@ -1,19 +1,19 @@
 let direction;
+
 let correct = 0;
 let wrong = 0;
 
 let round = 0;
 const maxRounds = 35;
 
-let trainingRound = 0;
-const maxTraining = 3;
+let trainingClicks = 0;
+const maxTrainingClicks = 3;
 
 let isTraining = true;
 let gameActive = false;
 
 let startTime;
 
-// görseller
 const sharkLeft = "shark-left.png";
 const sharkRight = "shark-right.png";
 
@@ -22,33 +22,11 @@ function startTraining() {
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("gameScreen").style.display = "block";
 
-    document.getElementById("continueBtn").style.display = "block";
-    document.getElementById("continueBtn").innerText = "Devam Et";
+    nextTrainingRound();
 }
 
-// DEVAM ET
-function continueGame() {
-    document.getElementById("continueBtn").style.display = "none";
-    document.getElementById("result").innerText = "";
-
-    if (isTraining) {
-        runTraining();
-    } else {
-        newRound();
-    }
-}
-
-// ANTRENMAN
-function runTraining() {
-    if (trainingRound >= maxTraining) {
-        isTraining = false;
-        document.getElementById("result").innerText = "Antrenman bitti!";
-        document.getElementById("continueBtn").style.display = "block";
-        return;
-    }
-
-    trainingRound++;
-
+// ANTRENMAN TURU
+function nextTrainingRound() {
     const sharks = getSharks();
     setRandomSides(sharks);
 
@@ -64,15 +42,34 @@ function runTraining() {
 
     setTimeout(() => {
         hideSharks();
-
-        document.getElementById("result").innerText =
-            direction === "left" ? "Doğru: SOL" : "Doğru: SAĞ";
-
-        document.getElementById("continueBtn").style.display = "block";
     }, 1200);
 }
 
-// ANA OYUN
+// ANTRENMAN TIKLAMA
+function handleTrainingClick(user) {
+    trainingClicks++;
+
+    document.getElementById("result").innerText =
+        user === direction ? "Doğru!" : "Yanlış!";
+
+    if (trainingClicks >= maxTrainingClicks) {
+        document.getElementById("result").innerText = "Antrenman bitti!";
+        document.getElementById("continueArea").style.display = "block";
+        return;
+    }
+
+    setTimeout(nextTrainingRound, 800);
+}
+
+// ANA OYUN BAŞLAT
+function startGame() {
+    isTraining = false;
+    document.getElementById("continueArea").style.display = "none";
+    document.getElementById("result").innerText = "";
+    newRound();
+}
+
+// ANA OYUN TURU
 function newRound() {
     if (round >= maxRounds) {
         alert(`Oyun bitti!\nDoğru: ${correct}\nYanlış: ${wrong}`);
@@ -101,9 +98,12 @@ function newRound() {
     }, 1200);
 }
 
-// TAHMİN
+// TIKLAMA
 function guess(user) {
-    if (isTraining) return;
+    if (isTraining) {
+        handleTrainingClick(user);
+        return;
+    }
 
     let reaction = Date.now() - startTime;
 
@@ -115,9 +115,7 @@ function guess(user) {
         showResult(`❌ Yanlış (${reaction} ms)`);
     }
 
-    setTimeout(() => {
-        document.getElementById("continueBtn").style.display = "block";
-    }, 500);
+    setTimeout(newRound, 800);
 }
 
 // yardımcılar
