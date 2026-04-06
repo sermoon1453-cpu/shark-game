@@ -3,32 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Köpekbalığı Oyunu</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="game-area">
 
-    <h1>Ortadaki köpekbalığına dikkat et</h1>
-    <p id="round">Tur: 0 / 35</p>
+    <h1>Köpekbalığı Oyunu</h1>
 
-    <div class="sharks">
-        <img class="shark" id="shark1">
-        <img class="shark" id="shark2">
-        <img class="shark" id="shark3">
+    <!-- BAŞLANGIÇ EKRANI -->
+    <div id="startScreen">
+        <img src="shark-right.png" class="start-img">
+        <p>Ortadaki köpekbalığına dikkat edin ve hangi yöne baktığına odaklanın.</p>
+        <button onclick="startTraining()">Başlat</button>
     </div>
 
-    <div class="buttons">
-        <button onclick="guess('left')">SOL</button>
-        <button onclick="guess('right')">SAĞ</button>
-    </div>
+    <!-- OYUN ALANI -->
+    <div id="gameScreen" style="display:none;">
 
-    <p id="result"></p>
+        <p id="infoText">Ortadaki köpekbalığına dikkat edin</p>
+        <p id="round"></p>
+
+        <div class="sharks">
+            <img class="shark" id="shark1">
+            <img class="shark" id="shark2">
+            <img class="shark" id="shark3">
+        </div>
+
+        <div class="buttons">
+            <button onclick="guess('left')">SOL</button>
+            <button onclick="guess('right')">SAĞ</button>
+        </div>
+
+        <p id="result"></p>
+
+        <button id="continueBtn" onclick="continueGame()" style="display:none;">
+            Devam Et
+        </button>
+
+    </div>
 
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
