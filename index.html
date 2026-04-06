@@ -5,27 +5,31 @@
     <title>Köpekbalığı Oyunu</title>
 
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<h1>🦈 Köpekbalığı Oyunu</h1>
+<div class="container">
 
-<div id="game-container">
+    <h1>Köpekbalığı Oyunu</h1>
 
-    <div id="shark">⬅️</div>
+    <div class="game-box">
+        <div id="shark">🦈</div>
 
-    <button onclick="guess('left')">⬅️ Sol</button>
-    <button onclick="guess('right')">Sağ ➡️</button>
-    <button onclick="skip()">Atla</button>
-    <button onclick="finishGame()">Bitir</button>
+        <div class="buttons">
+            <button onclick="guess('left')">SOL</button>
+            <button onclick="guess('right')">SAĞ</button>
+        </div>
 
-    <p id="result"></p>
+        <button class="skip" onclick="skip()">Atla</button>
+        <button class="finish" onclick="finishGame()">Bitir</button>
+
+        <p id="result"></p>
+    </div>
+
+    <canvas id="resultChart"></canvas>
 
 </div>
-
-<canvas id="resultChart" width="400" height="200"></canvas>
 
 <script src="script.js"></script>
 
