@@ -98,7 +98,7 @@ function newRound() {
 
     setTimeout(() => {
         hideSharks();
-        startTime = Date.now();
+        startTime = Date.now(); // ⏱️ süre hala ölçülüyor
     }, 1200);
 }
 
@@ -109,14 +109,14 @@ function guess(user) {
         return;
     }
 
-    let reaction = Date.now() - startTime;
+    let reaction = Date.now() - startTime; // ölçüm devam ediyor (gizli)
 
     if (user === direction) {
         correct++;
-        showResult(`✅ Doğru (${reaction} ms)`);
+        showResult("✅ Doğru");
     } else {
         wrong++;
-        showResult(`❌ Yanlış (${reaction} ms)`);
+        showResult("❌ Yanlış");
     }
 
     setTimeout(newRound, 800);
